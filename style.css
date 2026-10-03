@@ -5158,3 +5158,77 @@ footer {
 footer { padding: 10px 0 !important; }
 .footer-inner { min-height: unset !important; }
 .footer-copy { font-size: 0.72rem !important; }
+
+/* ══════════════════════════════════════════
+   CONTACT IMAGE ZONE — cursor hint animation
+══════════════════════════════════════════ */
+.contact-hint {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  /* Animated path: starts center-left, sweeps to center-right */
+  animation: hintTravel 3s ease-in-out 1s forwards;
+  opacity: 0;
+}
+
+/* Cursor icon */
+.hint-cursor {
+  position: relative;
+  filter: drop-shadow(0 0 10px rgba(0,229,255,0.8));
+  animation: hintBob 0.6s ease-in-out infinite alternate;
+}
+
+/* Ripple ring expanding from cursor */
+.hint-ripple {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(0,229,255,0.6);
+  animation: hintRipple 1.2s ease-out infinite;
+}
+
+/* Label below cursor */
+.hint-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: rgba(0,229,255,0.85);
+  white-space: nowrap;
+  background: rgba(2,11,30,0.75);
+  border: 1px solid rgba(0,229,255,0.25);
+  border-radius: 20px;
+  padding: 4px 12px;
+  backdrop-filter: blur(8px);
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(0,229,255,0.5);
+}
+
+/* Cursor travels left → right → left across the image zone */
+@keyframes hintTravel {
+  0%   { opacity: 0;   left: 15%; top: 45%; }
+  10%  { opacity: 1;   left: 15%; top: 45%; }
+  45%  { opacity: 1;   left: 65%; top: 55%; }
+  55%  { opacity: 1;   left: 65%; top: 55%; }
+  90%  { opacity: 1;   left: 25%; top: 40%; }
+  100% { opacity: 0;   left: 25%; top: 40%; }
+}
+
+@keyframes hintBob {
+  from { transform: translateY(0px) rotate(-5deg); }
+  to   { transform: translateY(-4px) rotate(0deg); }
+}
+
+@keyframes hintRipple {
+  0%   { width: 20px; height: 20px; opacity: 0.8; }
+  100% { width: 80px; height: 80px; opacity: 0; }
+}
+
+/* Hide hint once user interacts */
+.contact-image-zone.user-interacted .contact-hint {
+  display: none !important;
+}

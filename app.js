@@ -876,11 +876,14 @@ function initContactForm() {
   const layer2   = document.getElementById('contact-bg-2');
   if (!layer2) return;
 
-  // Attach to image zone, not the whole section
   const imageZone = layer2.closest('.contact-image-zone') || layer2.parentElement;
+  const hint      = document.getElementById('contact-hint');
   const RADIUS = 180;
 
   imageZone.addEventListener('mousemove', (e) => {
+    // Hide hint on first interaction
+    if (hint) imageZone.classList.add('user-interacted');
+
     const rect = imageZone.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
