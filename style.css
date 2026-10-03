@@ -5162,6 +5162,16 @@ footer { padding: 10px 0 !important; }
 /* ══════════════════════════════════════════
    CONTACT IMAGE ZONE — cursor hint animation
 ══════════════════════════════════════════ */
+/* Cursor travels left → right → left across the image zone — loops */
+@keyframes hintTravel {
+  0%   { opacity: 0;   left: 12%; top: 45%; }
+  8%   { opacity: 1;   left: 12%; top: 45%; }
+  42%  { opacity: 1;   left: 68%; top: 55%; }
+  58%  { opacity: 1;   left: 68%; top: 55%; }
+  92%  { opacity: 1;   left: 12%; top: 45%; }
+  100% { opacity: 0;   left: 12%; top: 45%; }
+}
+
 .contact-hint {
   position: absolute;
   z-index: 5;
@@ -5170,8 +5180,7 @@ footer { padding: 10px 0 !important; }
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  /* Animated path: starts center-left, sweeps to center-right */
-  animation: hintTravel 3s ease-in-out 1s forwards;
+  animation: hintTravel 4s ease-in-out 1s infinite;
   opacity: 0;
 }
 
@@ -5208,15 +5217,7 @@ footer { padding: 10px 0 !important; }
   text-shadow: 0 0 10px rgba(0,229,255,0.5);
 }
 
-/* Cursor travels left → right → left across the image zone */
-@keyframes hintTravel {
-  0%   { opacity: 0;   left: 15%; top: 45%; }
-  10%  { opacity: 1;   left: 15%; top: 45%; }
-  45%  { opacity: 1;   left: 65%; top: 55%; }
-  55%  { opacity: 1;   left: 65%; top: 55%; }
-  90%  { opacity: 1;   left: 25%; top: 40%; }
-  100% { opacity: 0;   left: 25%; top: 40%; }
-}
+/* (hintTravel keyframes defined above with the .contact-hint rule) */
 
 @keyframes hintBob {
   from { transform: translateY(0px) rotate(-5deg); }
@@ -5231,4 +5232,416 @@ footer { padding: 10px 0 !important; }
 /* Hide hint once user interacts */
 .contact-image-zone.user-interacted .contact-hint {
   display: none !important;
+}
+
+
+/* ══════════════════════════════════════════
+   MOBILE RESPONSIVE — COMPREHENSIVE
+   max-width: 768px  &  max-width: 480px
+══════════════════════════════════════════ */
+
+/* ─── Hide cursor elements on all touch/mobile ─── */
+@media (max-width: 768px) {
+  #cursor,
+  #cursor-follower,
+  #trail-canvas { display: none !important; }
+
+  body { cursor: auto !important; overflow-x: hidden !important; }
+  button { cursor: pointer !important; }
+
+  /* ─── GENERAL SECTION LAYOUT ─── */
+  .section { padding: 60px 0 !important; }
+  .section-inner { padding: 0 16px !important; }
+  .section-header { margin-bottom: 36px !important; }
+  .section-header h2 { font-size: clamp(1.5rem, 6vw, 2rem) !important; }
+
+  /* ─── NAVBAR ─── */
+  .nav-links,
+  .nav-cta { display: none !important; }
+
+  .hamburger {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    cursor: pointer !important;
+    z-index: 1010 !important;
+    position: relative !important;
+  }
+  .hamburger span {
+    display: block !important;
+    width: 24px !important;
+    height: 2px !important;
+    background: var(--text) !important;
+    transition: 0.3s !important;
+    border-radius: 2px !important;
+  }
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg) !important;
+  }
+  .hamburger.open span:nth-child(2) {
+    opacity: 0 !important;
+  }
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg) !important;
+  }
+
+  .nav-logo-icon { width: 32px !important; height: 32px !important; font-size: 0.95rem !important; }
+  .logo-first, .logo-last { font-size: 0.82rem !important; }
+  .nav-logo-text small { font-size: 0.6rem !important; }
+
+  /* ─── MOBILE OVERLAY MENU (injected by JS) ─── */
+  #mobile-nav-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(2, 8, 20, 0.97) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    z-index: 1005 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: opacity 0.3s ease !important;
+  }
+  #mobile-nav-overlay.open {
+    opacity: 1 !important;
+    pointer-events: all !important;
+  }
+  #mobile-nav-overlay a {
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    color: var(--text) !important;
+    text-decoration: none !important;
+    padding: 14px 0 !important;
+    letter-spacing: -0.5px !important;
+    transition: color 0.25s !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+  #mobile-nav-overlay a:hover { color: var(--cyan) !important; }
+  #mobile-nav-overlay svg { width: 22px !important; height: 22px !important; color: var(--cyan) !important; }
+  #mobile-nav-overlay .overlay-close {
+    position: absolute !important;
+    top: 20px !important; right: 20px !important;
+    width: 40px !important; height: 40px !important;
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--text) !important;
+    font-size: 1.2rem !important;
+    cursor: pointer !important;
+    transition: background 0.2s, color 0.2s !important;
+  }
+  #mobile-nav-overlay .overlay-close:hover {
+    background: rgba(0,229,255,0.12) !important;
+    color: var(--cyan) !important;
+  }
+  #mobile-nav-overlay .overlay-divider {
+    width: 40px !important;
+    height: 1px !important;
+    background: rgba(0,229,255,0.25) !important;
+    margin: 4px 0 !important;
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    height: auto !important;
+    min-height: 100svh !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .hero-inner { height: auto !important; flex: 1 !important; }
+  .hero-sidebar { display: none !important; }
+  .hero-cards { display: none !important; }
+  .hero-quote { display: none !important; }
+  .scroll-indicator { display: none !important; }
+  .about-cursive { display: none !important; }
+  .hero-cards::after { display: none !important; }
+
+  /* Hero grid: single column, photo first */
+  .hero-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 24px 16px 0 16px !important;
+    gap: 24px !important;
+    grid-template-columns: unset !important;
+  }
+  .hero-center { order: -1 !important; width: 100% !important; display: flex !important; justify-content: center !important; }
+  .hero-content { max-width: 100% !important; width: 100% !important; text-align: center !important; padding: 0 !important; }
+  .hero-name { font-size: clamp(2rem, 9vw, 2.8rem) !important; letter-spacing: -1.5px !important; text-align: center !important; }
+  .hero-greeting { text-align: center !important; font-size: 0.95rem !important; }
+  .hero-role-line { justify-content: center !important; }
+  .hero-bio { font-size: 0.82rem !important; text-align: center !important; max-width: 100% !important; }
+  .hero-badge { justify-content: center !important; }
+  .hero-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+  .hero-actions .btn-primary,
+  .hero-actions .btn-ghost {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* Hero photo — centered, smaller */
+  .hero-photo-wrap {
+    width: 200px !important;
+    margin: 0 auto !important;
+  }
+  .hero-glow-ring.r1 { width: 230px !important; height: 230px !important; }
+  .hero-glow-ring.r2 { width: 270px !important; height: 270px !important; }
+  .hero-glow-ring.r3 { width: 310px !important; height: 310px !important; }
+  .chip-card, .future-card { display: none !important; }
+
+  /* Stats bar: 3 items in a row, compact */
+  .hero-stats-bar {
+    margin: 0 !important;
+    border-radius: 0 !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .stat-item {
+    padding: 12px 10px !important;
+    gap: 8px !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+  .stat-num { font-size: 1.2rem !important; }
+  .stat-label { font-size: 0.52rem !important; letter-spacing: 1px !important; }
+  .stat-icon { width: 30px !important; height: 30px !important; }
+  .stat-icon svg { width: 14px !important; height: 14px !important; }
+  .stat-divider-v { width: 1px !important; flex-shrink: 0 !important; }
+
+  /* ─── ABOUT ─── */
+  .about-main {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 24px !important;
+    grid-template-columns: unset !important;
+  }
+  .about-photo-col { display: flex !important; flex-direction: column !important; align-items: center !important; width: 100% !important; }
+  .about-photo-card { max-width: 300px !important; width: 100% !important; height: 240px !important; }
+  .about-quote-block { max-width: 300px !important; }
+  .about-info-col { display: flex !important; flex-direction: column !important; width: 100% !important; }
+  .about-heading { font-size: clamp(1.4rem, 6vw, 1.8rem) !important; text-align: center !important; }
+  .about-desc { text-align: center !important; max-width: 100% !important; }
+  .about-traits {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+  .about-actions { justify-content: center !important; flex-wrap: wrap !important; }
+
+  /* About info cards 1 column */
+  .about-info-col .about-info-card { width: 100% !important; transform: none !important; }
+  .about-facts-inline { grid-template-columns: 1fr !important; }
+
+  /* ─── SKILLS ─── */
+  .skills-top {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+    grid-template-columns: unset !important;
+  }
+  .skills-top-left { text-align: center !important; }
+  .skills-top-left h2 { font-size: 1.5rem !important; }
+  .skills-icon-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+  }
+  .skill-icon-card { padding: 14px 8px !important; font-size: 0.65rem !important; }
+  .sic-img { width: 34px !important; height: 34px !important; }
+  .skills-grid { grid-template-columns: 1fr !important; }
+
+  /* ─── PROJECTS ─── */
+  .np-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .np-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .np-header-right { text-align: left !important; }
+  .np-cursive { font-size: 0.9rem !important; }
+
+  /* Featured card body: 1 column */
+  .np-featured-body {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    padding: 16px !important;
+  }
+  .np-featured-img-wrap { height: 220px !important; }
+
+  /* AstroQuest: column (image top, text below) */
+  .np-card-astro {
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: unset !important;
+  }
+  .np-astro-img-side {
+    width: 100% !important;
+    height: 200px !important;
+    flex-shrink: 0 !important;
+  }
+  .np-card-body { flex: 1 !important; }
+
+  /* Bottom row: 1 column on small, 2 on 768 */
+  .np-bottom-row {
+    grid-template-columns: 1fr 1fr !important;
+    height: auto !important;
+    flex: unset !important;
+  }
+  .np-card-sm {
+    height: auto !important;
+    min-height: 130px !important;
+  }
+
+  /* Old projects grid */
+  .projects-grid { grid-template-columns: 1fr !important; }
+  .projects-row  { grid-template-columns: 1fr 1fr !important; }
+
+  /* ─── EDUCATION ─── */
+  .edu-journey-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+  .journey-steps {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+  .journey-arrow { display: none !important; }
+  .journey-step { width: auto !important; }
+
+  /* ─── CONTACT ─── */
+  .contact-image-zone { height: 260px !important; }
+  .contact-card-zone  { padding: 24px 0 !important; }
+  .contact-banner {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 20px 16px !important;
+    gap: 16px !important;
+  }
+  .contact-banner-left h2 { font-size: 1.2rem !important; }
+  .contact-btn { width: 100% !important; justify-content: center !important; }
+  .contact-links-col { align-items: center !important; }
+  .clink { font-size: 0.8rem !important; }
+  .contact-grid { grid-template-columns: 1fr !important; }
+  .github-connect { grid-template-columns: 1fr !important; }
+  .gh-repos-grid  { grid-template-columns: 1fr !important; }
+
+  /* ─── FOOTER ─── */
+  footer { padding: 20px 0 !important; }
+  .footer-inner {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 12px !important;
+  }
+  .footer-links { justify-content: center !important; }
+
+  /* ─── GITHUB CONTRIBUTION GRID ─── */
+  .contribution-grid { grid-template-columns: repeat(26, 1fr) !important; }
+
+  /* ─── PREVENT HORIZONTAL OVERFLOW ─── */
+  * { max-width: 100%; box-sizing: border-box !important; }
+  .hero-photo-wrap * { max-width: none !important; }
+  .hero-glow-ring { max-width: none !important; }
+
+  /* ─── FLOATING TAGS IN ABOUT HIDE ON MOBILE ─── */
+  .float-tag { display: none !important; }
+  .photo-status { font-size: 0.6rem !important; padding: 4px 10px !important; }
+}
+
+/* ─────────────────────────────────────────
+   EXTRA NARROW: max-width 480px
+───────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* General */
+  body { font-size: 14px !important; }
+  .section { padding: 50px 0 !important; }
+  .section-inner { padding: 0 14px !important; }
+  .section-header h2 { font-size: 1.4rem !important; }
+
+  /* Navbar */
+  #navbar { padding: 0 14px !important; }
+  .nav-logo-text { display: none !important; }
+
+  /* Hero photo even smaller on very narrow screens */
+  .hero-photo-wrap { width: 180px !important; }
+  .hero-glow-ring.r1 { width: 200px !important; height: 200px !important; }
+  .hero-glow-ring.r2 { width: 238px !important; height: 238px !important; }
+  .hero-glow-ring.r3 { width: 270px !important; height: 270px !important; }
+
+  .hero-name { font-size: clamp(1.7rem, 8vw, 2.2rem) !important; }
+  .hero-bio  { font-size: 0.78rem !important; }
+
+  /* Stats — fit 3 in a row */
+  .stat-num   { font-size: 1rem !important; }
+  .stat-label { font-size: 0.48rem !important; }
+  .stat-icon  { display: none !important; }
+  .stat-arrow { display: none !important; }
+
+  /* About traits: 2 cols */
+  .about-traits { grid-template-columns: 1fr 1fr !important; }
+
+  /* Skills icon grid: 3 col */
+  .skills-icon-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 8px !important; }
+
+  /* Projects bottom row: 1 col */
+  .np-bottom-row { grid-template-columns: 1fr !important; }
+  .np-card-sm { flex-direction: column !important; height: auto !important; }
+  .np-sm-visual { width: 100% !important; height: 80px !important; }
+  .np-featured-img-wrap { height: 180px !important; }
+
+  /* Contact */
+  .contact-image-zone { height: 200px !important; }
+  .contact-banner-left h2 { font-size: 1rem !important; }
+
+  /* Journey steps 2x2 */
+  .journey-steps {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  .journey-step { padding: 12px 10px !important; }
+
+  /* Buttons */
+  .btn-primary, .btn-ghost { padding: 10px 20px !important; font-size: 0.82rem !important; }
+
+  /* Section tag */
+  .about-tag, .skills-tag, .edu-tag, .projects-tag { font-size: 0.65rem !important; }
+
+  /* No white-space nowrap on cards */
+  .hero-cards, .hero-cards * { white-space: normal !important; }
+
+  /* GitHub */
+  .gh-stats { gap: 14px !important; }
+  .gh-stat span { font-size: 1.1rem !important; }
+}
+
+/* Hero video — fills hex exactly like the photo did */
+.hero-hex-clip video {
+  position: absolute !important;
+  top: 0 !important; left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  display: block !important;
 }
