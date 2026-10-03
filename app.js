@@ -873,39 +873,30 @@ function initContactForm() {
 
 // ── Hero video left/right switch on cursor ──
 (function initHeroVideoSwitch() {
-  const clip    = document.querySelector('.hero-hex-clip');
+  const hero    = document.getElementById('hero');
   const vidMain = document.getElementById('hero-video-main');
   const vidLeft = document.getElementById('hero-video-left');
-  if (!clip || !vidMain || !vidLeft) return;
+  if (!hero || !vidMain || !vidLeft) return;
 
-  let currentSide = 'right';
-  let overHex = false;
+  let active = false;
 
-  function switchTo(side) {
-    if (side === currentSide) return;
-    currentSide = side;
-    if (side === 'left') {
-      vidMain.style.display = 'none';
-      vidLeft.style.display = 'block';
-      vidLeft.play();
-    } else {
-      vidLeft.style.display = 'none';
-      vidMain.style.display = 'block';
-      vidMain.play();
-    }
-  }
-
-  // Only trigger when cursor is inside the hex clip
-  clip.addEventListener('mouseenter', () => { overHex = true; });
-  clip.addEventListener('mouseleave', () => {
-    overHex = false;
-    switchTo('right'); // reset when leaving hex
+  hero.addEventListener('mouseenter', () => {
+    if (active) return;
+    active = true;
+    // Pause main, show and play heroleft
+    vidMain.pause();
+    vidMain.style.display = 'none';
+    vidLeft.style.display = 'block';
+    vidLeft.play();
   });
 
-  clip.addEventListener('mousemove', (e) => {
-    if (!overHex) return;
-    const rect = clip.getBoundingClientRect();
-    switchTo(e.clientX < rect.left + rect.width / 2 ? 'left' : 'right');
+  hero.addEventListener('mouseleave', () => {
+    active = false;
+    // Hide heroleft, resume main
+    vidLeft.pause();
+    vidLeft.style.display = 'none';
+    vidMain.style.display = 'block';
+    vidMain.play();
   });
 })();
 
