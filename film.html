@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Interactive Portrait — Maram Saidi</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #03080f;
+      --cream:  #e8e0d0;
+      --amber:  #c8923a;
+      --border: rgba(232,224,208,0.15);
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* ── LOADER ── */
+    #loader {
+      position: fixed; inset: 0; z-index: 100;
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+      transition: opacity 0.8s ease;
+    }
+    #loader.hidden { opacity: 0; pointer-events: none; }
+    .loader-label {
+      font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--amber);
+    }
+    .loader-bar-track {
+      width: 180px; height: 1px;
+      background: rgba(232,224,208,0.2);
+      position: relative; overflow: hidden;
+    }
+    .loader-bar-fill {
+      position: absolute; inset: 0;
+      background: var(--amber);
+      transform: scaleX(0); transform-origin: left;
+      animation: loaderPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes loaderPulse {
+      0%   { transform: scaleX(0) translateX(0); }
+      50%  { transform: scaleX(0.6) translateX(40%); }
+      100% { transform: scaleX(0) translateX(200%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .loader-bar-fill { animation: none; transform: scaleX(0.5); }
+    }
+
+    /* ── SECTION ── */
+    #film-section {
+      position: relative;
+      width: 100vw; height: 100vh;
+      overflow: hidden;
+      cursor: ew-resize;
+      touch-action: none;
+    }
+
+    /* ── VIDEO ── */
+    .hero-film {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      display: block;
+    }
+    .hero-film.ready { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-film { transition: none; }
+    }
+
+    /* ── VIGNETTE ── */
+    .vignette {
+      position: absolute; inset: 0; pointer-events: none; z-index: 2;
+      background:
+        linear-gradient(to right,  var(--bg) 0%, transparent 22%, transparent 78%, var(--bg) 100%),
+        linear-gradient(to bottom, var(--bg) 0%, transparent 18%, transparent 72%, var(--bg) 100%);
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: absolute; top: 0; left: 0; right: 0;
+      z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .h-logo {
+      font-size: 11px; letter-spacing: 3px; font-weight: 500;
+      color: var(--cream);
+    }
+    .h-logo span { color: var(--amber); }
+    .h-center {
+      font-size: 8px; letter-spacing: 5px; text-transform: uppercase;
+      color: rgba(232,224,208,0.5);
+    }
+    .h-link {
+      font-size: 8px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--amber); text-decoration: none;
+      border-bottom: 1px solid var(--amber);
+      padding-bottom: 1px;
+      transition: opacity 0.2s;
+    }
+    .h-link:hover { opacity: 0.7; }
+
+    /* ── TITLE (left) ── */
+    .title-block {
+      position: absolute; left: 32px; top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+    .title-main {
+      font-size: clamp(42px, 7vw, 80px);
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 0.92;
+      text-transform: uppercase;
+    }
+    .title-main .outline {
+      -webkit-text-stroke: 1px var(--cream);
+      color: transparent;
+    }
+    .title-sub {
+      margin-top: 14px;
+      font-size: 8px; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    /* ── BOTTOM RIGHT: scrub guide ── */
+    .scrub-guide {
+      position: absolute; bottom: 28px; right: 32px;
+      z-index: 10;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+    }
+    .scrub-label {
+      font-size: 8px; letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(232,224,208,0.5);
+    }
+    .scrub-bar-wrap {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .scrub-end-label {
+      font-size: 7px; letter-spacing: 2px; color: rgba(232,224,208,0.35);
+      text-transform: uppercase;
+    }
+    .scrub-bar-track {
+      width: 180px; height: 1px;
+      background: rgba(232,224,208,0.2);
+      position: relative; overflow: hidden;
+    }
+    .scrub-bar-fill {
+      position: absolute; inset: 0;
+      background: var(--amber);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.05s linear;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .scrub-bar-fill { transition: none; }
+    }
+
+    /* ── BOTTOM LEFT: counter ── */
+    .counter {
+      position: absolute; bottom: 28px; left: 32px;
+      z-index: 10;
+      font-size: 9px; letter-spacing: 3px;
+      font-variant-numeric: tabular-nums;
+      color: rgba(232,224,208,0.6);
+    }
+    .counter .num { font-size: 28px; font-weight: 800; color: var(--cream); letter-spacing: -1px; }
+
+    /* ── BACK LINK ── */
+    .back-link {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      z-index: 10;
+      font-size: 8px; letter-spacing: 4px; text-transform: uppercase;
+      color: rgba(232,224,208,0.4); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--amber); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      .h-center { display: none; }
+      .counter  { display: none; }
+      .title-main { font-size: 38px; letter-spacing: -2px; }
+      .title-block { left: 16px; }
+      header { padding: 16px; }
+      .scrub-guide { right: 16px; bottom: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader -->
+  <div id="loader">
+    <span class="loader-label">Loading Portrait</span>
+    <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
+  </div>
+
+  <!-- Main section -->
+  <section id="film-section">
+
+    <!-- Video -->
+    <video class="hero-film" muted playsinline preload="auto" id="hero-film">
+      <source src="assets/hero.webm" type="video/webm">
+      <source src="assets/heroleft.mp4" type="video/mp4">
+    </video>
+
+    <!-- Vignette -->
+    <div class="vignette"></div>
+
+    <!-- Header -->
+    <header>
+      <div class="h-logo">M<span>•</span>01</div>
+      <div class="h-center">Interactive Portrait / 2026</div>
+      <a href="index.html" class="h-link">← Back</a>
+    </header>
+
+    <!-- Title -->
+    <div class="title-block">
+      <div class="title-main">
+        IN THE<br><span class="outline">FLOW</span>
+      </div>
+      <div class="title-sub">Focus / Rhythm / Flow</div>
+    </div>
+
+    <!-- Scrub guide -->
+    <div class="scrub-guide">
+      <div class="scrub-label">← Move to Explore →</div>
+      <div class="scrub-bar-wrap">
+        <span class="scrub-end-label">End</span>
+        <div class="scrub-bar-track">
+          <div class="scrub-bar-fill" id="scrub-fill"></div>
+        </div>
+        <span class="scrub-end-label">Start</span>
+      </div>
+    </div>
+
+    <!-- Counter -->
+    <div class="counter">
+      <span class="num" id="counter-num">00</span> /100
+    </div>
+
+    <!-- Back to portfolio -->
+    <a href="index.html" class="back-link">← Portfolio</a>
+
+  </section>
+
+  <script>
+    const video    = document.getElementById('hero-film');
+    const fill     = document.getElementById('scrub-fill');
+    const counter  = document.getElementById('counter-num');
+    const loader   = document.getElementById('loader');
+
+    let duration = 0;
+    let targetTime = 0;
+    let rafId = null;
+
+    /* ── Init ── */
+    function init() {
+      if (!Number.isFinite(video.duration) || video.duration === 0) return;
+      video.pause();
+      video.currentTime = 0;
+      duration = video.duration;
+      // Show video, hide loader
+      video.classList.add('ready');
+      loader.classList.add('hidden');
+    }
+
+    video.addEventListener('loadedmetadata', init);
+    if (video.readyState >= 1) init();
+
+    /* ── Never autoplay ── */
+    video.addEventListener('play', () => video.pause());
+
+    /* ── Scrub ── */
+    function updateUI(progress) {
+      fill.style.transform = `scaleX(${progress})`;
+      counter.textContent  = String(Math.round(progress * 100)).padStart(2, '0');
+    }
+
+    function seekTo(nextTime) {
+      targetTime = Math.min(duration, Math.max(0, nextTime));
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        video.currentTime = targetTime;
+        const progress = duration ? targetTime / duration : 0;
+        updateUI(progress);
+        rafId = null;
+      });
+    }
+
+    /* ── Mouse: right=start (0), left=end (1) — inversé ── */
+    window.addEventListener('mousemove', (e) => {
+      if (!duration) return;
+      const inverse = 1 - Math.min(1, Math.max(0, e.clientX / window.innerWidth));
+      seekTo(inverse * duration);
+    }, { passive: true });
+
+    /* ── Touch / Pointer ── */
+    const section = document.getElementById('film-section');
+    section.addEventListener('pointermove', (e) => {
+      if (!duration) return;
+      const inverse = 1 - Math.min(1, Math.max(0, e.clientX / window.innerWidth));
+      seekTo(inverse * duration);
+    }, { passive: true });
+
+    /* ── Keyboard ── */
+    window.addEventListener('keydown', (e) => {
+      if (!duration) return;
+      const step = duration / 24;
+      if (e.key === 'ArrowRight') seekTo(video.currentTime - step); // right = back toward start
+      if (e.key === 'ArrowLeft')  seekTo(video.currentTime + step); // left = forward toward end
+    });
+  </script>
+
+</body>
+</html>
