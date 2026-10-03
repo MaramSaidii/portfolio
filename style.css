@@ -5645,3 +5645,15 @@ footer { padding: 10px 0 !important; }
   object-position: center top !important;
   display: block !important;
 }
+
+/* Hero photo wrap — bigger */
+.hero-photo-wrap {
+  width: 420px !important;
+}
+.hero-grid {
+  grid-template-columns: 340px 1fr 240px !important;
+}
+
+/* Hero photo wrap — even bigger */
+.hero-photo-wrap { width: 520px !important; }
+.hero-grid { grid-template-columns: 300px 1fr 220px !important; }
