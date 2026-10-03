@@ -871,38 +871,48 @@ function initContactForm() {
   };
 })();
 
-// ── Hero video left/right switch on cursor ──
+// ── Hero video 3-zone switch ──────────────
 (function initHeroVideoSwitch() {
-  const hero    = document.getElementById('hero');
-  const vidMain = document.getElementById('hero-video-main');
-  const vidLeft = document.getElementById('hero-video-left');
-  if (!hero || !vidMain || !vidLeft) return;
+  const hero     = document.getElementById('hero');
+  const vidMain  = document.getElementById('hero-video-main');
+  const vidLeft  = document.getElementById('hero-video-left');
+  const vidRight = document.getElementById('hero-video-right');
+  if (!hero || !vidMain || !vidLeft || !vidRight) return;
 
-  let userMoved = false; // only activate after actual mouse movement
-  let active    = false;
+  let currentZone = 'center';
 
-  hero.addEventListener('mousemove', () => {
-    if (!userMoved) userMoved = true;
-    if (active) return;
-    active = true;
-    vidMain.pause();
-    vidMain.style.display = 'none';
-    vidLeft.style.display = 'block';
-    vidLeft.play();
+  function showZone(zone) {
+    if (zone === currentZone) return;
+    currentZone = zone;
+
+    // Hide all
+    [vidMain, vidLeft, vidRight].forEach(v => {
+      v.style.display = 'none';
+      v.pause();
+    });
+
+    // Show the right one
+    const target = zone === 'left' ? vidLeft : zone === 'right' ? vidRight : vidMain;
+    target.style.display = 'block';
+    target.play();
+  }
+
+  hero.addEventListener('mousemove', (e) => {
+    const W     = window.innerWidth;
+    const third = W / 3;
+    const x     = e.clientX;
+
+    if (x < third)           showZone('left');
+    else if (x < third * 2)  showZone('center');
+    else                     showZone('right');
   });
 
-  hero.addEventListener('mouseleave', () => {
-    active = false;
-    vidLeft.pause();
-    vidLeft.currentTime = 0;
-    vidLeft.style.display = 'none';
-    vidMain.style.display = 'block';
-    vidMain.play();
-  });
+  hero.addEventListener('mouseleave', () => showZone('center'));
 
-  // Ensure heroleft stays hidden on load
-  vidLeft.style.display = 'none';
-  vidMain.style.display = 'block';
+  // Init: show main, hide others
+  vidLeft.style.display  = 'none';
+  vidRight.style.display = 'none';
+  vidMain.style.display  = 'block';
 })();
 
 // ── Contact section cursor-reveal background ─

@@ -5670,3 +5670,24 @@ footer { padding: 10px 0 !important; }
 }
 /* Left video hidden by default — NO !important so JS can override */
 #hero-video-left { display: none; }
+
+/* ── Zone debug lines (DELETE LATER) ── */
+.zone-debug {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 100;
+}
+.zone-line {
+  position: absolute; top: 0; bottom: 0;
+  width: 2px; background: red; opacity: 0.8;
+}
+#zone-line-1 { left: 33.33%; }
+#zone-line-2 { left: 66.66%; }
+.zone-label {
+  position: absolute; top: 80px;
+  font-family: var(--mono); font-size: 0.7rem;
+  color: red; font-weight: 700; letter-spacing: 2px;
+  text-shadow: 0 0 6px rgba(0,0,0,0.8);
+}
+.zone-label-l { left: 16%; }
+.zone-label-c { left: 50%; transform: translateX(-50%); }
+.zone-label-r { left: 83%; transform: translateX(-50%); }
