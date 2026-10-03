@@ -871,57 +871,6 @@ function initContactForm() {
   };
 })();
 
-// ── Hero video 3-zone switch ──────────────
-(function initHeroVideoSwitch() {
-  const hero     = document.getElementById('hero');
-  const vidMain  = document.getElementById('hero-video-main');
-  const vidLeft  = document.getElementById('hero-video-left');
-  const vidRight = document.getElementById('hero-video-right');
-  if (!hero || !vidMain || !vidLeft || !vidRight) return;
-
-  let currentZone = 'center';
-
-  function showZone(zone) {
-    if (zone === currentZone) return;
-    currentZone = zone;
-
-    // Hide all (but don't reset time — keep last frame)
-    [vidMain, vidLeft, vidRight].forEach(v => {
-      v.style.display = 'none';
-    });
-
-    // Show the right one — only play if not already at end
-    const target = zone === 'left' ? vidLeft : zone === 'right' ? vidRight : vidMain;
-    target.style.display = 'block';
-    if (zone === 'center') {
-      target.play(); // main always loops
-    } else {
-      // Side videos: play from start each time cursor enters zone
-      target.currentTime = 0;
-      target.play();
-      // Pause on last frame when ended
-      target.onended = () => { /* stays on last frame naturally */ };
-    }
-  }
-
-  hero.addEventListener('mousemove', (e) => {
-    const W     = window.innerWidth;
-    const third = W / 3;
-    const x     = e.clientX;
-
-    if (x < third)           showZone('left');
-    else if (x < third * 2)  showZone('center');
-    else                     showZone('right');
-  });
-
-  hero.addEventListener('mouseleave', () => showZone('center'));
-
-  // Init: show main, hide others
-  vidLeft.style.display  = 'none';
-  vidRight.style.display = 'none';
-  vidMain.style.display  = 'block';
-})();
-
 // ── Contact section cursor-reveal background ─
 (function initContactReveal() {
   const layer2   = document.getElementById('contact-bg-2');
