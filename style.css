@@ -5643,7 +5643,6 @@ footer { padding: 10px 0 !important; }
   height: 100% !important;
   object-fit: cover !important;
   object-position: center top !important;
-  display: block !important;
 }
 
 /* Hero photo wrap — bigger */
@@ -5668,6 +5667,6 @@ footer { padding: 10px 0 !important; }
   width: 100% !important; height: 100% !important;
   object-fit: cover !important;
   object-position: center top !important;
-  display: block !important;
 }
-#hero-video-left { display: none !important; }
+/* Left video hidden by default — NO !important so JS can override */
+#hero-video-left { display: none; }
