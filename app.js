@@ -871,6 +871,42 @@ function initContactForm() {
   };
 })();
 
+// ── Hero video left/right switch on cursor ──
+(function initHeroVideoSwitch() {
+  const wrap     = document.querySelector('.hero-photo-wrap');
+  const clip     = document.querySelector('.hero-hex-clip');
+  const vidMain  = document.getElementById('hero-video-main');
+  const vidLeft  = document.getElementById('hero-video-left');
+  if (!wrap || !vidMain || !vidLeft) return;
+
+  let currentSide = 'right';
+
+  clip.addEventListener('mousemove', (e) => {
+    const rect = clip.getBoundingClientRect();
+    const side = e.clientX < rect.left + rect.width / 2 ? 'left' : 'right';
+    if (side === currentSide) return;
+    currentSide = side;
+
+    if (side === 'left') {
+      vidMain.style.display = 'none';
+      vidLeft.style.display = 'block';
+      vidLeft.play();
+    } else {
+      vidLeft.style.display = 'none';
+      vidMain.style.display = 'block';
+      vidMain.play();
+    }
+  });
+
+  // Reset to main on mouse leave
+  clip.addEventListener('mouseleave', () => {
+    currentSide = 'right';
+    vidLeft.style.display = 'none';
+    vidMain.style.display = 'block';
+    vidMain.play();
+  });
+})();
+
 // ── Contact section cursor-reveal background ─
 (function initContactReveal() {
   const layer2   = document.getElementById('contact-bg-2');
