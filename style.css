@@ -5657,3 +5657,6 @@ footer { padding: 10px 0 !important; }
 /* Hero photo wrap — even bigger */
 .hero-photo-wrap { width: 520px !important; }
 .hero-grid { grid-template-columns: 300px 1fr 220px !important; }
+
+.hero-photo-wrap { width: 620px !important; }
+.hero-grid { grid-template-columns: 280px 1fr 200px !important; }
