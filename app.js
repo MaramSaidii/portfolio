@@ -873,12 +873,13 @@ function initContactForm() {
 
 // ── Hero video left/right switch on cursor ──
 (function initHeroVideoSwitch() {
-  const wrap    = document.querySelector('.hero-photo-wrap');
+  const clip    = document.querySelector('.hero-hex-clip');
   const vidMain = document.getElementById('hero-video-main');
   const vidLeft = document.getElementById('hero-video-left');
-  if (!wrap || !vidMain || !vidLeft) return;
+  if (!clip || !vidMain || !vidLeft) return;
 
   let currentSide = 'right';
+  let overHex = false;
 
   function switchTo(side) {
     if (side === currentSide) return;
@@ -894,17 +895,18 @@ function initContactForm() {
     }
   }
 
-  // Track on the whole hero center so it feels natural
-  const heroCenter = document.querySelector('.hero-center');
-  if (!heroCenter) return;
-
-  heroCenter.addEventListener('mousemove', (e) => {
-    const rect = wrap.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    switchTo(e.clientX < centerX ? 'left' : 'right');
+  // Only trigger when cursor is inside the hex clip
+  clip.addEventListener('mouseenter', () => { overHex = true; });
+  clip.addEventListener('mouseleave', () => {
+    overHex = false;
+    switchTo('right'); // reset when leaving hex
   });
 
-  heroCenter.addEventListener('mouseleave', () => switchTo('right'));
+  clip.addEventListener('mousemove', (e) => {
+    if (!overHex) return;
+    const rect = clip.getBoundingClientRect();
+    switchTo(e.clientX < rect.left + rect.width / 2 ? 'left' : 'right');
+  });
 })();
 
 // ── Contact section cursor-reveal background ─
