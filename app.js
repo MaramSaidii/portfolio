@@ -885,16 +885,23 @@ function initContactForm() {
     if (zone === currentZone) return;
     currentZone = zone;
 
-    // Hide all
+    // Hide all (but don't reset time — keep last frame)
     [vidMain, vidLeft, vidRight].forEach(v => {
       v.style.display = 'none';
-      v.pause();
     });
 
-    // Show the right one
+    // Show the right one — only play if not already at end
     const target = zone === 'left' ? vidLeft : zone === 'right' ? vidRight : vidMain;
     target.style.display = 'block';
-    target.play();
+    if (zone === 'center') {
+      target.play(); // main always loops
+    } else {
+      // Side videos: play from start each time cursor enters zone
+      target.currentTime = 0;
+      target.play();
+      // Pause on last frame when ended
+      target.onended = () => { /* stays on last frame naturally */ };
+    }
   }
 
   hero.addEventListener('mousemove', (e) => {
