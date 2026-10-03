@@ -878,12 +878,13 @@ function initContactForm() {
   const vidLeft = document.getElementById('hero-video-left');
   if (!hero || !vidMain || !vidLeft) return;
 
-  let active = false;
+  let userMoved = false; // only activate after actual mouse movement
+  let active    = false;
 
-  hero.addEventListener('mouseenter', () => {
+  hero.addEventListener('mousemove', () => {
+    if (!userMoved) userMoved = true;
     if (active) return;
     active = true;
-    // Pause main, show and play heroleft
     vidMain.pause();
     vidMain.style.display = 'none';
     vidLeft.style.display = 'block';
@@ -892,12 +893,16 @@ function initContactForm() {
 
   hero.addEventListener('mouseleave', () => {
     active = false;
-    // Hide heroleft, resume main
     vidLeft.pause();
+    vidLeft.currentTime = 0;
     vidLeft.style.display = 'none';
     vidMain.style.display = 'block';
     vidMain.play();
   });
+
+  // Ensure heroleft stays hidden on load
+  vidLeft.style.display = 'none';
+  vidMain.style.display = 'block';
 })();
 
 // ── Contact section cursor-reveal background ─
