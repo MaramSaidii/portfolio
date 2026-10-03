@@ -873,20 +873,16 @@ function initContactForm() {
 
 // ── Hero video left/right switch on cursor ──
 (function initHeroVideoSwitch() {
-  const wrap     = document.querySelector('.hero-photo-wrap');
-  const clip     = document.querySelector('.hero-hex-clip');
-  const vidMain  = document.getElementById('hero-video-main');
-  const vidLeft  = document.getElementById('hero-video-left');
+  const wrap    = document.querySelector('.hero-photo-wrap');
+  const vidMain = document.getElementById('hero-video-main');
+  const vidLeft = document.getElementById('hero-video-left');
   if (!wrap || !vidMain || !vidLeft) return;
 
   let currentSide = 'right';
 
-  clip.addEventListener('mousemove', (e) => {
-    const rect = clip.getBoundingClientRect();
-    const side = e.clientX < rect.left + rect.width / 2 ? 'left' : 'right';
+  function switchTo(side) {
     if (side === currentSide) return;
     currentSide = side;
-
     if (side === 'left') {
       vidMain.style.display = 'none';
       vidLeft.style.display = 'block';
@@ -896,15 +892,19 @@ function initContactForm() {
       vidMain.style.display = 'block';
       vidMain.play();
     }
+  }
+
+  // Track on the whole hero center so it feels natural
+  const heroCenter = document.querySelector('.hero-center');
+  if (!heroCenter) return;
+
+  heroCenter.addEventListener('mousemove', (e) => {
+    const rect = wrap.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    switchTo(e.clientX < centerX ? 'left' : 'right');
   });
 
-  // Reset to main on mouse leave
-  clip.addEventListener('mouseleave', () => {
-    currentSide = 'right';
-    vidLeft.style.display = 'none';
-    vidMain.style.display = 'block';
-    vidMain.play();
-  });
+  heroCenter.addEventListener('mouseleave', () => switchTo('right'));
 })();
 
 // ── Contact section cursor-reveal background ─
