@@ -77,10 +77,6 @@
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="film.html">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-        Film
-      </a></li>
       <li><a href="#github"><i data-lucide="github"></i> GitHub</a></li>
       <li><a href="#contact"><i data-lucide="mail"></i> Contact</a></li>
     </ul>
@@ -213,8 +209,9 @@
             <!-- Photo with city bg blur inside hex -->
             <div class="hero-hex-clip">
               <div class="city-bg-hex"></div>
-              <video id="hero-video-main" autoplay loop muted playsinline>
-                <source src="assets/hero.mp4" type="video/mp4">
+              <video id="hero-video-main" muted playsinline preload="auto">
+                <source src="assets/hero_scrub.webm" type="video/webm">
+                <source src="assets/hero.mp4"        type="video/mp4">
               </video>
               <div class="hex-overlay-gradient"></div>
             </div>

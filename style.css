@@ -710,7 +710,7 @@ section, nav, footer { position: relative; z-index: 1; }
   display: grid;
   grid-template-columns: 1fr 340px 260px;
   align-items: center;
-  padding: 0 3% 0 72px;
+  padding: 0 8% 0 72px;
   gap: 20px;
   flex: 1;
 }
@@ -820,6 +820,8 @@ section, nav, footer { position: relative; z-index: 1; }
   width: 260px;
   display: flex; align-items: center; justify-content: center;
   animation: floatUpDown 4s ease-in-out infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 /* Glow rings behind hex */
@@ -5643,6 +5645,9 @@ footer { padding: 10px 0 !important; }
   height: 100% !important;
   object-fit: cover !important;
   object-position: center top !important;
+  transform: translateZ(0);       /* GPU layer — eliminates decode lag */
+  will-change: contents;
+  transition: none !important;    /* no CSS transition delay on frames */
 }
 
 /* Hero photo wrap — bigger */

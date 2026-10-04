@@ -33,6 +33,7 @@
       transition: opacity 0.8s ease;
     }
     #loader.hidden { opacity: 0; pointer-events: none; }
+
     .loader-label {
       font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
       color: var(--amber);
@@ -49,15 +50,15 @@
       animation: loaderPulse 1.4s ease-in-out infinite;
     }
     @keyframes loaderPulse {
-      0%   { transform: scaleX(0) translateX(0); }
-      50%  { transform: scaleX(0.6) translateX(40%); }
-      100% { transform: scaleX(0) translateX(200%); }
+      0%   { transform: scaleX(0)   translateX(0);    }
+      50%  { transform: scaleX(0.6) translateX(40%);  }
+      100% { transform: scaleX(0)   translateX(200%); }
     }
     @media (prefers-reduced-motion: reduce) {
       .loader-bar-fill { animation: none; transform: scaleX(0.5); }
     }
 
-    /* ── SECTION ── */
+    /* ── MAIN SECTION ── */
     #film-section {
       position: relative;
       width: 100vw; height: 100vh;
@@ -72,9 +73,9 @@
       width: 100%; height: 100%;
       object-fit: cover;
       object-position: center;
+      display: block;
       opacity: 0;
       transition: opacity 0.8s ease;
-      display: block;
     }
     .hero-film.ready { opacity: 1; }
     @media (prefers-reduced-motion: reduce) {
@@ -83,9 +84,10 @@
 
     /* ── VIGNETTE ── */
     .vignette {
-      position: absolute; inset: 0; pointer-events: none; z-index: 2;
+      position: absolute; inset: 0;
+      pointer-events: none; z-index: 2;
       background:
-        linear-gradient(to right,  var(--bg) 0%, transparent 22%, transparent 78%, var(--bg) 100%),
+        linear-gradient(to right,  var(--bg) 0%, transparent 20%, transparent 80%, var(--bg) 100%),
         linear-gradient(to bottom, var(--bg) 0%, transparent 18%, transparent 72%, var(--bg) 100%);
     }
 
@@ -104,7 +106,7 @@
     .h-logo span { color: var(--amber); }
     .h-center {
       font-size: 8px; letter-spacing: 5px; text-transform: uppercase;
-      color: rgba(232,224,208,0.5);
+      color: rgba(232,224,208,0.45);
     }
     .h-link {
       font-size: 8px; letter-spacing: 4px; text-transform: uppercase;
@@ -113,9 +115,9 @@
       padding-bottom: 1px;
       transition: opacity 0.2s;
     }
-    .h-link:hover { opacity: 0.7; }
+    .h-link:hover { opacity: 0.65; }
 
-    /* ── TITLE (left) ── */
+    /* ── TITLE BLOCK (left, vertically centered) ── */
     .title-block {
       position: absolute; left: 32px; top: 50%;
       transform: translateY(-50%);
@@ -127,18 +129,19 @@
       letter-spacing: -3px;
       line-height: 0.92;
       text-transform: uppercase;
+      color: var(--cream);
     }
     .title-main .outline {
-      -webkit-text-stroke: 1px var(--cream);
+      -webkit-text-stroke: 1.5px var(--cream);
       color: transparent;
     }
     .title-sub {
-      margin-top: 14px;
+      margin-top: 16px;
       font-size: 8px; letter-spacing: 5px; text-transform: uppercase;
       color: var(--amber);
     }
 
-    /* ── BOTTOM RIGHT: scrub guide ── */
+    /* ── SCRUB GUIDE (bottom right) ── */
     .scrub-guide {
       position: absolute; bottom: 28px; right: 32px;
       z-index: 10;
@@ -146,19 +149,19 @@
     }
     .scrub-label {
       font-size: 8px; letter-spacing: 4px; text-transform: uppercase;
-      color: rgba(232,224,208,0.5);
+      color: rgba(232,224,208,0.45);
     }
     .scrub-bar-wrap {
-      display: flex; align-items: center; gap: 8px;
+      display: flex; align-items: center; gap: 10px;
     }
     .scrub-end-label {
-      font-size: 7px; letter-spacing: 2px; color: rgba(232,224,208,0.35);
-      text-transform: uppercase;
+      font-size: 7px; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(232,224,208,0.3);
     }
     .scrub-bar-track {
       width: 180px; height: 1px;
-      background: rgba(232,224,208,0.2);
-      position: relative; overflow: hidden;
+      background: rgba(232,224,208,0.18);
+      position: relative;
     }
     .scrub-bar-fill {
       position: absolute; inset: 0;
@@ -170,34 +173,40 @@
       .scrub-bar-fill { transition: none; }
     }
 
-    /* ── BOTTOM LEFT: counter ── */
+    /* ── COUNTER (bottom left) ── */
     .counter {
       position: absolute; bottom: 28px; left: 32px;
       z-index: 10;
       font-size: 9px; letter-spacing: 3px;
       font-variant-numeric: tabular-nums;
-      color: rgba(232,224,208,0.6);
+      color: rgba(232,224,208,0.5);
     }
-    .counter .num { font-size: 28px; font-weight: 800; color: var(--cream); letter-spacing: -1px; }
+    .counter .num {
+      font-size: 28px; font-weight: 800;
+      color: var(--cream); letter-spacing: -1px;
+      font-variant-numeric: tabular-nums;
+    }
 
-    /* ── BACK LINK ── */
+    /* ── BACK LINK (bottom center) ── */
     .back-link {
-      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: 28px; left: 50%;
+      transform: translateX(-50%);
       z-index: 10;
       font-size: 8px; letter-spacing: 4px; text-transform: uppercase;
-      color: rgba(232,224,208,0.4); text-decoration: none;
+      color: rgba(232,224,208,0.35); text-decoration: none;
       transition: color 0.2s;
     }
     .back-link:hover { color: var(--amber); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 720px) {
-      .h-center { display: none; }
-      .counter  { display: none; }
+      .h-center  { display: none; }
+      .counter   { display: none; }
       .title-main { font-size: 38px; letter-spacing: -2px; }
       .title-block { left: 16px; }
       header { padding: 16px; }
       .scrub-guide { right: 16px; bottom: 20px; }
+      .back-link { display: none; }
     }
   </style>
 </head>
@@ -206,24 +215,27 @@
   <!-- Loader -->
   <div id="loader">
     <span class="loader-label">Loading Portrait</span>
-    <div class="loader-bar-track"><div class="loader-bar-fill"></div></div>
+    <div class="loader-bar-track">
+      <div class="loader-bar-fill"></div>
+    </div>
   </div>
 
   <!-- Main section -->
   <section id="film-section">
 
-    <!-- Video -->
-    <video class="hero-film" muted playsinline preload="auto" id="hero-film">
-      <source src="assets/hero0.webm" type="video/webm">
-      <source src="assets/hero.mp4"   type="video/mp4">
+    <!-- Video: WebM first (VP9/Chromium), MP4 fallback -->
+    <video class="hero-film" id="hero-film"
+           muted playsinline preload="auto">
+      <source src="assets/hero_scrub.webm" type="video/webm">
+      <source src="assets/hero.mp4"        type="video/mp4">
     </video>
 
-    <!-- Vignette -->
+    <!-- Vignette overlay -->
     <div class="vignette"></div>
 
     <!-- Header -->
     <header>
-      <div class="h-logo">M<span>•</span>01</div>
+      <div class="h-logo">F<span>•</span>01</div>
       <div class="h-center">Interactive Portrait / 2026</div>
       <a href="index.html" class="h-link">Connect</a>
     </header>
@@ -250,79 +262,88 @@
 
     <!-- Counter -->
     <div class="counter">
-      <span class="num" id="counter-num">00</span> /100
+      <span class="num" id="counter-num">00</span>&thinsp;/100
     </div>
 
-    <!-- Back to portfolio -->
+    <!-- Back link -->
     <a href="index.html" class="back-link">← Portfolio</a>
 
   </section>
 
   <script>
-    const video    = document.getElementById('hero-film');
-    const fill     = document.getElementById('scrub-fill');
-    const counter  = document.getElementById('counter-num');
-    const loader   = document.getElementById('loader');
+    const video   = document.getElementById('hero-film');
+    const fill    = document.getElementById('scrub-fill');
+    const counter = document.getElementById('counter-num');
+    const loader  = document.getElementById('loader');
 
-    let duration = 0;
+    let duration  = 0;
     let targetTime = 0;
-    let rafId = null;
+    let rafId     = null;
 
-    /* ── Init ── */
+    /* ── 1. Never let the video play ── */
+    video.addEventListener('play', () => video.pause());
+
+    /* ── 2. Init once metadata is ready ── */
     function init() {
       if (!Number.isFinite(video.duration) || video.duration === 0) return;
+      if (duration > 0) return; // already done
+      duration = video.duration;
       video.pause();
       video.currentTime = 0;
-      duration = video.duration;
-      // Show video, hide loader
       video.classList.add('ready');
       loader.classList.add('hidden');
+      updateUI(0);
     }
 
     video.addEventListener('loadedmetadata', init);
+    video.addEventListener('durationchange', init);
+    video.addEventListener('canplay',        init);
     if (video.readyState >= 1) init();
 
-    /* ── Never autoplay ── */
-    video.addEventListener('play', () => video.pause());
-
-    /* ── Scrub ── */
+    /* ── 3. UI ── */
     function updateUI(progress) {
       fill.style.transform = `scaleX(${progress})`;
       counter.textContent  = String(Math.round(progress * 100)).padStart(2, '0');
     }
 
+    /* ── 4. Seek (one rAF at a time) ── */
     function seekTo(nextTime) {
-      targetTime = Math.min(duration, Math.max(0, nextTime));
+      targetTime = Math.max(0, Math.min(duration, nextTime));
       if (rafId !== null) return;
       rafId = requestAnimationFrame(() => {
         video.currentTime = targetTime;
-        const progress = duration ? targetTime / duration : 0;
-        updateUI(progress);
+        updateUI(duration > 0 ? targetTime / duration : 0);
         rafId = null;
       });
     }
 
-    /* ── Mouse: right=start (0), left=end (1) — inversé ── */
+    /* ── 5. Mouse: right = frame 0 (start), left = last frame (end) ── */
     window.addEventListener('mousemove', (e) => {
       if (!duration) return;
-      const inverse = 1 - Math.min(1, Math.max(0, e.clientX / window.innerWidth));
+      const norm    = Math.max(0, Math.min(1, e.clientX / window.innerWidth));
+      const inverse = 1 - norm;
       seekTo(inverse * duration);
     }, { passive: true });
 
-    /* ── Touch / Pointer ── */
+    /* ── 6. Touch / pointer drag ── */
     const section = document.getElementById('film-section');
+    section.addEventListener('pointerdown', (e) => {
+      section.setPointerCapture(e.pointerId);
+    });
     section.addEventListener('pointermove', (e) => {
       if (!duration) return;
-      const inverse = 1 - Math.min(1, Math.max(0, e.clientX / window.innerWidth));
+      if (e.buttons === 0) return; // only while pressed
+      const norm    = Math.max(0, Math.min(1, e.clientX / window.innerWidth));
+      const inverse = 1 - norm;
       seekTo(inverse * duration);
     }, { passive: true });
 
-    /* ── Keyboard ── */
+    /* ── 7. Keyboard: arrows scrub by 1/24 of duration ── */
     window.addEventListener('keydown', (e) => {
       if (!duration) return;
       const step = duration / 24;
-      if (e.key === 'ArrowRight') seekTo(video.currentTime - step); // right = back toward start
-      if (e.key === 'ArrowLeft')  seekTo(video.currentTime + step); // left = forward toward end
+      if (e.key === 'ArrowRight') { e.preventDefault(); seekTo(video.currentTime - step); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); seekTo(video.currentTime + step); }
     });
   </script>
 

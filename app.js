@@ -915,3 +915,60 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
+
+
+// ── Hero video scrub (cursor → frame) ───
+(function initHeroVideoScrub() {
+  function setup() {
+    const video = document.getElementById('hero-video-main');
+    if (!video) return;
+
+    let dur        = 0;
+    let targetTime = 0;
+    let scheduled  = false;
+
+    /* block all playback — scrub only */
+    video.addEventListener('play', () => video.pause());
+
+    /* init once duration is known */
+    function init() {
+      if (!Number.isFinite(video.duration) || video.duration === 0) return;
+      if (dur > 0) return;
+      dur = video.duration;
+      video.pause();
+      video.currentTime = 0;
+    }
+    video.addEventListener('loadedmetadata', init);
+    if (video.readyState >= 1) init();
+
+    /* always write the LATEST targetTime — never skip it */
+    function commit() {
+      video.currentTime = targetTime;
+      scheduled = false;
+    }
+
+    function scrubTo(clientX) {
+      if (!dur) return;
+      const ratio   = Math.max(0, Math.min(1, clientX / window.innerWidth));
+      targetTime    = (1 - ratio) * dur;   /* right = start, left = end */
+      if (!scheduled) {
+        scheduled = true;
+        requestAnimationFrame(commit);
+      }
+    }
+
+    /* mouse — listener on window so overlay elements don't block it */
+    window.addEventListener('mousemove', e => scrubTo(e.clientX), { passive: true });
+
+    /* touch / stylus */
+    window.addEventListener('pointermove', e => {
+      if (e.pointerType !== 'mouse' && e.buttons > 0) scrubTo(e.clientX);
+    }, { passive: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setup);
+  } else {
+    setup();
+  }
+})();
