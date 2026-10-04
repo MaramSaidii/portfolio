@@ -77,7 +77,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#github"><i data-lucide="github"></i> GitHub</a></li>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#contact"><i data-lucide="mail"></i> Contact</a></li>
     </ul>
     <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
@@ -415,7 +415,16 @@
         <div class="skills-icon-grid">
           <div class="skill-icon-card"><div class="sic-img arduino"></div><span>Arduino</span></div>
           <div class="skill-icon-card"><div class="sic-img esp32"></div><span>ESP32</span></div>
-          <div class="skill-icon-card"><div class="sic-img cpp"></div><span>C / C++</span></div>
+          <div class="skill-icon-card skill-cert" data-cert="assets/certifications/C++.png" data-cert-url="https://www.sololearn.com/en/certificates/CC-82IATFY0" style="cursor:pointer"
+               onclick="window.open('https://www.sololearn.com/en/certificates/CC-82IATFY0','_blank')"
+          >
+            <div class="sic-img cpp"></div>
+            <span>C / C++</span>
+            <div class="cert-badge" title="Certified">✦ certified</div>
+            <div class="cert-preview">
+              <img src="assets/certifications/C++.png" alt="C++ Certificate"/>
+            </div>
+          </div>
           <div class="skill-icon-card"><div class="sic-img python"></div><span>Python</span></div>
           <div class="skill-icon-card"><div class="sic-img java"></div><span>Java</span></div>
           <div class="skill-icon-card"><div class="sic-img linux"></div><span>Linux</span></div>
@@ -423,6 +432,12 @@
           <div class="skill-icon-card"><div class="sic-img pcb"></div><span>PCB Design</span></div>
           <div class="skill-icon-card"><div class="sic-img iot"></div><span>IoT &amp; Sensors</span></div>
           <div class="skill-icon-card"><div class="sic-img cloud"></div><span>Cloud &amp; Dashboards</span></div>
+          <div class="skill-icon-card skill-cert" data-cert="assets/certifications/HTML.png" style="cursor:pointer"
+               onclick="window.open('https://www.sololearn.com/en/certificates/CC-I0Q0UCLC','_blank')">
+            <div class="sic-img html"></div>
+            <span>HTML</span>
+            <div class="cert-badge">✦ certified</div>
+          </div>
         </div>
       </div>
     </div>
@@ -447,151 +462,218 @@
         <div class="np-header-right">
           <p class="np-cursive">Small projects<br>Big impact</p>
           <a href="https://github.com/MaramSaidii" target="_blank" class="np-view-all">
-            View All Projects <i data-lucide="arrow-right"></i>
+            View All <i data-lucide="arrow-right"></i>
           </a>
         </div>
       </div>
 
-      <!-- Main 2-column grid -->
-      <div class="np-grid" data-animate>
+      <!-- Accordion list -->
+      <div class="pj-accordion" id="pj-accordion">
 
-        <!-- ══════════════ LEFT COLUMN: AgriNova Featured ══════════════ -->
-        <div class="np-left-col">
-          <div class="np-featured-card">
-
-            <!-- Image slider area -->
-            <div class="np-featured-img-wrap">
-              <div class="agrinova-slider np-slider">
-                <div class="agrinova-slides" id="agrinova-slides">
-                  <img src="assets/AgriNova/maquette.png"         alt="AgriNova Maquette"/>
-                  <img src="assets/AgriNova/page Login.png"       alt="AgriNova Login"/>
-                  <img src="assets/AgriNova/page Agricole.png"    alt="AgriNova Agricole"/>
-                  <img src="assets/AgriNova/page IOT.png"         alt="AgriNova IoT"/>
-                  <img src="assets/AgriNova/page Formation.png"   alt="AgriNova Formation"/>
-                  <img src="assets/AgriNova/Ajouter Parcelle.png" alt="AgriNova Parcelle"/>
-                </div>
-                <button class="agri-prev np-slider-btn" onclick="agriSlide(-1)" aria-label="Prev"><i data-lucide="chevron-left"></i></button>
-                <button class="agri-next np-slider-btn" onclick="agriSlide(1)"  aria-label="Next"><i data-lucide="chevron-right"></i></button>
-                <div class="agri-dots np-dots" id="agri-dots"></div>
-              </div>
-              <!-- Badges overlaid on image -->
-              <div class="np-badge-featured">⭐ FEATURED PROJECT</div>
-              <div class="np-badge-selected"><i data-lucide="trophy"></i> Selected Project · Bal de Projet 2026</div>
+        <!-- ── Project 1: AgriNova ── -->
+        <div class="pj-item active" data-index="0">
+          <!-- Collapsed header (always visible) -->
+          <div class="pj-row">
+            <span class="pj-num">01</span>
+            <div class="pj-row-meta">
+              <span class="pj-row-title">AgriNova</span>
+              <span class="pj-row-cat">University Project · 3rd Year · 2026</span>
             </div>
-
-            <!-- Bottom info section: 2 sub-columns -->
-            <div class="np-featured-body">
-
-              <!-- Bottom-left: title, description, flow, tags -->
-              <div class="np-featured-info">
-                <div class="np-proj-icon-row">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-                  <h3 class="np-proj-title">AgriNova</h3>
+            <span class="pj-row-sub">Smart Agriculture IoT Platform</span>
+            <a href="https://github.com/MaramSaidii" target="_blank" class="pj-live-btn" onclick="event.stopPropagation()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.021C22 6.484 17.522 2 12 2z"/></svg>
+              VIEW PROJECT
+            </a>
+          </div>
+          <!-- Expanded body -->
+          <div class="pj-body">
+            <div class="pj-body-inner">
+              <!-- Images -->
+              <div class="pj-imgs">
+                <div class="pj-img-main">
+                  <div class="agrinova-slider np-slider">
+                    <div class="agrinova-slides" id="agrinova-slides">
+                      <img src="assets/AgriNova/maquette.png"         alt="AgriNova Maquette"/>
+                      <img src="assets/AgriNova/page Login.png"       alt="AgriNova Login"/>
+                      <img src="assets/AgriNova/page Agricole.png"    alt="AgriNova Agricole"/>
+                      <img src="assets/AgriNova/page IOT.png"         alt="AgriNova IoT"/>
+                      <img src="assets/AgriNova/page Formation.png"   alt="AgriNova Formation"/>
+                      <img src="assets/AgriNova/Ajouter Parcelle.png" alt="AgriNova Parcelle"/>
+                    </div>
+                    <button class="agri-prev np-slider-btn" onclick="agriSlide(-1)" aria-label="Prev"><i data-lucide="chevron-left"></i></button>
+                    <button class="agri-next np-slider-btn" onclick="agriSlide(1)"  aria-label="Next"><i data-lucide="chevron-right"></i></button>
+                    <div class="agri-dots np-dots" id="agri-dots"></div>
+                  </div>
+                  <div class="np-badge-featured">⭐ FEATURED</div>
                 </div>
-                <p class="np-proj-subtitle">Smart Agriculture IoT Platform</p>
+              </div>
+              <!-- Info -->
+              <div class="pj-info">
                 <p class="np-proj-desc">An IoT solution to monitor soil conditions and help farmers make data-driven decisions through a real-time web dashboard.</p>
-
                 <div class="np-tech-flow">
                   <div class="np-tech-step"><i data-lucide="cpu"></i><span>Sensors</span></div>
                   <span class="np-flow-arrow">→</span>
                   <div class="np-tech-step"><i data-lucide="zap"></i><span>Arduino</span></div>
                   <span class="np-flow-arrow">→</span>
-                  <div class="np-tech-step"><i data-lucide="globe"></i><span>Web App</span></div>
+                  <div class="np-tech-step"><i data-lucide="globe"></i><span>Web</span></div>
                   <span class="np-flow-arrow">→</span>
                   <div class="np-tech-step"><i data-lucide="bar-chart-2"></i><span>Dashboard</span></div>
                 </div>
-
                 <div class="np-tags">
                   <span class="np-tag-pill np-tag-arduino">Arduino</span>
                   <span class="np-tag-pill np-tag-sensor">Sensors</span>
                   <span class="np-tag-pill np-tag-iot">IoT</span>
                   <span class="np-tag-pill np-tag-web">Web</span>
                 </div>
-
-                <a href="https://github.com/MaramSaidii" target="_blank" class="np-case-link">View Case Study →</a>
-              </div>
-
-              <!-- Bottom-right: award + buttons -->
-              <div class="np-featured-actions">
-                <div class="np-award-badge">
+                <div class="np-award-badge" style="margin-top:12px">
                   <i data-lucide="trophy"></i>
-                  <div>
-                    <span class="np-award-title">Selected Project</span>
-                    <span class="np-award-sub">Bal de Projet 2026</span>
-                  </div>
+                  <div><span class="np-award-title">Selected Project</span><span class="np-award-sub">Bal de Projet 2026</span></div>
                 </div>
-                <div class="np-btn-group">
+                <div class="np-btn-group" style="margin-top:12px">
                   <a href="https://github.com/MaramSaidii" target="_blank" class="np-btn np-btn-gh">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.021C22 6.484 17.522 2 12 2z"/></svg>
-                    GitHub
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.021C22 6.484 17.522 2 12 2z"/></svg>GitHub
+                  </a>
+                  <a href="https://www.youtube.com/watch?v=GzUUhmxgjnY" target="_blank" class="np-btn np-btn-yt">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>Demo
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Project 2: AstroQuest ── -->
+        <div class="pj-item" data-index="1">
+          <div class="pj-row">
+            <span class="pj-num">02</span>
+            <div class="pj-row-meta">
+              <span class="pj-row-title">AstroQuest</span>
+              <span class="pj-row-cat">University Project · 1st Year · 2024</span>
+            </div>
+            <span class="pj-row-sub">Custom PC Game Controller</span>
+            <a href="https://github.com/MaramSaidii" target="_blank" class="pj-live-btn" onclick="event.stopPropagation()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.021C22 6.484 17.522 2 12 2z"/></svg>
+              VIEW PROJECT
+            </a>
+          </div>
+          <div class="pj-body">
+            <div class="pj-body-inner">
+              <div class="pj-imgs">
+                <div class="pj-img-main">
+                  <div class="agrinova-slider np-slider">
+                    <div class="agrinova-slides" id="astroquest-slides">
+                      <img src="assets/AstroQuest/emnléme.jpg"  alt="AstroQuest Logo"/>
+                      <img src="assets/AstroQuest/Version2.png" alt="AstroQuest V2"/>
+                    </div>
+                    <button class="agri-prev np-slider-btn" onclick="astroSlide(-1)" aria-label="Prev"><i data-lucide="chevron-left"></i></button>
+                    <button class="agri-next np-slider-btn" onclick="astroSlide(1)"  aria-label="Next"><i data-lucide="chevron-right"></i></button>
+                    <div class="agri-dots np-dots" id="astro-dots"></div>
+                  </div>
+                  <div class="np-badge-selected"><i data-lucide="trophy"></i> Bal de Projet 2026</div>
+                </div>
+              </div>
+              <div class="pj-info">
+                <p class="np-proj-desc">Custom game controller with ESP32, LCD display, buttons and vibration motor. Firmware and PC app built with C and SDL for real-time input handling.</p>
+                <div class="np-tech-flow">
+                  <div class="np-tech-step"><i data-lucide="cpu"></i><span>ESP32</span></div>
+                  <span class="np-flow-arrow">→</span>
+                  <div class="np-tech-step"><i data-lucide="code-2"></i><span>C / SDL</span></div>
+                  <span class="np-flow-arrow">→</span>
+                  <div class="np-tech-step"><i data-lucide="monitor"></i><span>PC App</span></div>
+                </div>
+                <div class="np-tags">
+                  <span class="np-tag-pill np-tag-esp">ESP32</span>
+                  <span class="np-tag-pill np-tag-cpp">C</span>
+                  <span class="np-tag-pill np-tag-web">SDL</span>
+                  <span class="np-tag-pill np-tag-hw">Hardware</span>
+                  <span class="np-tag-pill np-tag-ctrl">Controller</span>
+                </div>
+                <div class="np-btn-group" style="margin-top:12px">
+                  <a href="https://github.com/MaramSaidii" target="_blank" class="np-btn np-btn-gh">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.021C22 6.484 17.522 2 12 2z"/></svg>GitHub
                   </a>
                   <a href="https://www.youtube.com/watch?v=GzUUhmxgjnY&list=PLaxA49z0jsugwN5JIb9uLEhbhtYCT0w2E&index=12" target="_blank" class="np-btn np-btn-yt">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                    Demo
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>Demo
+                  </a>
+                  <button class="np-btn pj-attest-btn" data-img="assets/AstroQuest/attestation.png"
+                          style="border-color:rgba(250,180,0,0.4);color:#fbbf24;background:rgba(250,180,0,0.06)">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/></svg>
+                    Attestation
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Project 3: Savesta ── -->
+        <div class="pj-item" data-index="2">
+          <div class="pj-row">
+            <span class="pj-num">03</span>
+            <div class="pj-row-meta">
+              <span class="pj-row-title">Savesta</span>
+              <span class="pj-row-cat">Personal Project · 2026</span>
+            </div>
+            <span class="pj-row-sub">Smart Calendar & Daily Planner App</span>
+            <a href="https://github.com/MaramSaidii" target="_blank" class="pj-live-btn" onclick="event.stopPropagation()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.021C22 6.484 17.522 2 12 2z"/></svg>
+              VIEW PROJECT
+            </a>
+          </div>
+          <div class="pj-body">
+            <div class="pj-body-inner">
+              <div class="pj-imgs">
+                <div class="pj-img-main">
+                  <div class="agrinova-slider np-slider">
+                    <div class="agrinova-slides" id="savesta-slides">
+                      <img src="assets/Savesta/interface2.png"        alt="Savesta Interface"/>
+                      <img src="assets/Savesta/interfaceRoutines.png" alt="Savesta Routines"/>
+                    </div>
+                    <button class="agri-prev np-slider-btn" onclick="savestaSlide(-1)" aria-label="Prev"><i data-lucide="chevron-left"></i></button>
+                    <button class="agri-next np-slider-btn" onclick="savestaSlide(1)"  aria-label="Next"><i data-lucide="chevron-right"></i></button>
+                    <div class="agri-dots np-dots" id="savesta-dots"></div>
+                  </div>
+                  <div class="np-badge-featured" style="background:rgba(123,47,247,0.9);color:#fff;">✦ PERSONAL PROJECT</div>
+                </div>
+              </div>
+              <div class="pj-info">
+                <p class="np-proj-desc">A smart calendar app that transforms daily organization into a simple, visual and personalized experience — from wake-up to bedtime, as an interactive daily timeline with studies, work, sport, meals, tasks and more.</p>
+                <div class="np-tech-flow">
+                  <div class="np-tech-step"><i data-lucide="calendar"></i><span>Timeline</span></div>
+                  <span class="np-flow-arrow">→</span>
+                  <div class="np-tech-step"><i data-lucide="cpu"></i><span>AI Assistant</span></div>
+                  <span class="np-flow-arrow">→</span>
+                  <div class="np-tech-step"><i data-lucide="bar-chart-2"></i><span>Analytics</span></div>
+                </div>
+                <div class="np-tags">
+                  <span class="np-tag-pill np-tag-web">UI/UX</span>
+                  <span class="np-tag-pill np-tag-hw">Mobile</span>
+                  <span class="np-tag-pill np-tag-iot">AI</span>
+                  <span class="np-tag-pill np-tag-db">Productivity</span>
+                  <span class="np-tag-pill np-tag-sensor">Habits</span>
+                </div>
+                <div class="pj-features">
+                  <div class="pj-feat"><span>📅</span> Smart calendar — day / week / month</div>
+                  <div class="pj-feat"><span>🕐</span> Daily timeline from wake-up to bedtime</div>
+                  <div class="pj-feat"><span>🤖</span> AI assistant to organize your day</div>
+                  <div class="pj-feat"><span>🦋</span> Personalized avatar companion</div>
+                  <div class="pj-feat"><span>📊</span> Stats & habit tracking</div>
+                </div>
+                <div class="np-btn-group" style="margin-top:12px">
+                  <a href="https://github.com/MaramSaidii" target="_blank" class="np-btn np-btn-gh">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.021C22 6.484 17.522 2 12 2z"/></svg>GitHub
                   </a>
                 </div>
               </div>
-
-            </div><!-- /np-featured-body -->
-          </div><!-- /np-featured-card -->
-        </div><!-- /np-left-col -->
-
-        <!-- ══════════════ RIGHT COLUMN: 3 stacked cards ══════════════ -->
-        <div class="np-right-col">
-
-          <!-- ── AstroQuest (top, tall card) ── -->
-          <div class="np-card np-card-astro">
-            <!-- Left: image slider (55%) -->
-            <div class="np-astro-img-side">
-              <div class="agrinova-slider np-slider">
-                <div class="agrinova-slides" id="astroquest-slides">
-                  <img src="assets/AstroQuest/emnléme.jpg"  alt="AstroQuest Logo"/>
-                  <img src="assets/AstroQuest/Version1.jpg" alt="AstroQuest V1"/>
-                  <img src="assets/AstroQuest/Vesrion2.jpg" alt="AstroQuest V2"/>
-                </div>
-                <button class="agri-prev np-slider-btn" onclick="astroSlide(-1)" aria-label="Prev"><i data-lucide="chevron-left"></i></button>
-                <button class="agri-next np-slider-btn" onclick="astroSlide(1)"  aria-label="Next"><i data-lucide="chevron-right"></i></button>
-                <div class="agri-dots np-dots" id="astro-dots"></div>
-              </div>
-              <div class="np-badge-selected np-badge-sm"><i data-lucide="trophy"></i> Selected Project · Bal de Projet 2026</div>
-              <div class="np-year-badge">2024</div>
             </div>
-            <!-- Right: content (45%) -->
-            <div class="np-card-body">
-              <div class="np-card-icon-row">
-                <i data-lucide="gamepad-2" class="np-icon-accent"></i>
-                <div>
-                  <h4 class="np-card-title">AstroQuest</h4>
-                  <p class="np-card-subtitle">Custom PC Game Controller</p>
-                </div>
-              </div>
-              <p class="np-card-desc">Custom game controller with ESP32, LCD display, buttons and vibration motor. Firmware and PC app built with C and SDL.</p>
-              <div class="np-tags">
-                <span class="np-tag-pill np-tag-esp">ESP32</span>
-                <span class="np-tag-pill np-tag-cpp">C</span>
-                <span class="np-tag-pill np-tag-web">SDL</span>
-                <span class="np-tag-pill np-tag-hw">Hardware</span>
-                <span class="np-tag-pill np-tag-ctrl">Controller</span>
-                <span class="np-tag-pill np-tag-pc">→PC</span>
-              </div>
-              <a href="https://github.com/MaramSaidii" target="_blank" class="np-case-link np-case-link-sm">View Case Study →</a>
-              <div class="np-btn-group np-btn-group-sm">
-                <a href="https://github.com/MaramSaidii" target="_blank" class="np-btn np-btn-gh np-btn-xs">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844a9.59 9.59 0 012.504.337c1.909-1.296 2.747-1.026 2.747-1.026.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.021C22 6.484 17.522 2 12 2z"/></svg> GitHub
-                </a>
-                <a href="https://www.youtube.com/watch?v=GzUUhmxgjnY&list=PLaxA49z0jsugwN5JIb9uLEhbhtYCT0w2E&index=12" target="_blank" class="np-btn np-btn-yt np-btn-xs">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> Demo
-                </a>
-              </div>
-            </div>
-          </div><!-- /np-card-astro -->
+          </div>
+        </div>
 
-
-        </div><!-- /np-right-col -->
-
-      </div><!-- /np-grid -->
+      </div><!-- /pj-accordion -->
     </div><!-- /np-projects-wrap -->
   </section>
+
+
 
   <!-- ═══════════════ EDUCATION & JOURNEY ═══════════════ -->
   <section id="education" class="section section-dark">
@@ -666,6 +748,120 @@
 
       </div>
     </div>
+  </section>
+
+  <!-- ═══════════════ EXPERIENCE ═══════════════ -->
+  <section id="experience" class="section exp-section">
+    <div class="exp-inner">
+
+      <!-- Header -->
+      <div class="exp-header" data-animate>
+        <span class="exp-tag">MY JOURNEY</span>
+        <h2 class="exp-title">Experience &amp;<br><span class="gradient-text">Technical Activities</span></h2>
+        <p class="exp-desc">From hands-on internships to exciting hackathons and workshops, each experience has helped me grow as an IoT engineer and build real-world solutions.</p>
+      </div>
+
+      <!-- Central timeline -->
+      <div class="exp-timeline-wrap" data-animate>
+        <div class="exp-tl-line"></div>
+
+        <!-- Item 1 — LEFT -->
+        <div class="exp-tl-row exp-tl-left">
+          <div class="exp-tl-card">
+            <div class="exp-tl-card-info">
+              <span class="exp-badge exp-badge-intern">INTERNSHIP</span>
+              <h3 class="exp-card-title">Cybersecurity Intern</h3>
+              <div class="exp-card-date"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Jul 2026 – Aug 2026</div>
+              <div class="exp-card-org">Prologic Tunisie · Tunis</div>
+            </div>
+            <div class="exp-tl-card-body">
+              <p class="exp-card-desc">Worked on Wazuh SIEM for cybersecurity monitoring and security event analysis. Deployed and configured Wazuh Manager, Wazuh Indexer, and Wazuh Dashboard in a Proxmox environment.</p>
+              <div class="exp-tags"><span>Wazuh</span><span>SIEM</span><span>Cybersecurity</span><span>Proxmox</span><span>Linux</span></div>
+            </div>
+          </div>
+          <div class="exp-tl-connector"></div>
+          <div class="exp-tl-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+          <div class="exp-tl-spacer"></div>
+        </div>
+
+        <!-- Item 2 — RIGHT -->
+        <div class="exp-tl-row exp-tl-right">
+          <div class="exp-tl-spacer"></div>
+          <div class="exp-tl-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
+          <div class="exp-tl-connector"></div>
+          <div class="exp-tl-card">
+            <div class="exp-tl-card-info">
+              <span class="exp-badge exp-badge-hack">HACKATHON</span>
+              <h3 class="exp-card-title">Hackathon Participant</h3>
+              <div class="exp-card-date"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Feb 2026 · 1 mo</div>
+              <div class="exp-card-org">INSAT · Tunis</div>
+            </div>
+            <div class="exp-tl-card-body">
+              <p class="exp-card-desc">Participated in a hackathon at INSAT as part of a 4-member team. Collaborated with teammates to develop and explore a project idea within a limited timeframe.</p>
+              <div class="exp-tags"><span>Hackathons</span><span>Teamwork</span><span>IoT</span><span>Embedded</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3 — LEFT -->
+        <div class="exp-tl-row exp-tl-left">
+          <div class="exp-tl-card">
+            <div class="exp-tl-card-info">
+              <span class="exp-badge exp-badge-hack">IDEATHON</span>
+              <h3 class="exp-card-title">HACKATOON AI &amp; IoT 2025</h3>
+              <div class="exp-card-date"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Nov 2025 · 1 mo</div>
+              <div class="exp-card-org">Université Sesame · Tunis</div>
+            </div>
+            <div class="exp-tl-card-body">
+              <p class="exp-card-desc">Participated in HACKATOON AI &amp; IoT, an ideathon held at SESAME University on November 8–9, 2025. Worked as part of a 3-member team to develop an innovative AI and IoT project idea.</p>
+              <div class="exp-tags"><span>AI</span><span>IoT</span><span>Hackathons</span><span>Teamwork</span></div>
+            </div>
+          </div>
+          <div class="exp-tl-connector"></div>
+          <div class="exp-tl-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <div class="exp-tl-spacer"></div>
+        </div>
+
+        <!-- Item 4 — RIGHT -->
+        <div class="exp-tl-row exp-tl-right">
+          <div class="exp-tl-spacer"></div>
+          <div class="exp-tl-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
+          <div class="exp-tl-connector"></div>
+          <div class="exp-tl-card">
+            <div class="exp-tl-card-info">
+              <span class="exp-badge exp-badge-hack">HACKATHON</span>
+              <h3 class="exp-card-title">IndabaX Tunisia 2025</h3>
+              <div class="exp-card-date"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> May 2025 · 1 mo</div>
+              <div class="exp-card-org">IndabaX Tunisia · Tunis</div>
+            </div>
+            <div class="exp-tl-card-body">
+              <p class="exp-card-desc">Participated in the IndabaX Tunisia 2025 Hackathon as part of a 3-member team. Attended technical workshops and keynote sessions focused on AI and emerging technologies.</p>
+              <div class="exp-tags"><span>AI</span><span>Hackathons</span><span>Machine Learning</span><span>Teamwork</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 5 — LEFT -->
+        <div class="exp-tl-row exp-tl-left">
+          <div class="exp-tl-card">
+            <div class="exp-tl-card-info">
+              <span class="exp-badge exp-badge-intern">INTERNSHIP</span>
+              <h3 class="exp-card-title">Intern</h3>
+              <div class="exp-card-date"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Jul 2024 · 1 mo</div>
+              <div class="exp-card-org">MASS Analytics · Tunis</div>
+            </div>
+            <div class="exp-tl-card-body">
+              <p class="exp-card-desc">Completed an introductory internship at Mass Analytics, gaining foundational experience in data analytics and business intelligence. Exposed to data processing workflows and how insights are generated from raw data.</p>
+              <div class="exp-tags"><span>Data Analysis</span><span>Business Intelligence</span><span>Python</span></div>
+            </div>
+          </div>
+          <div class="exp-tl-connector"></div>
+          <div class="exp-tl-node"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+          <div class="exp-tl-spacer"></div>
+        </div>
+
+      </div><!-- /exp-timeline-wrap -->
+    </div><!-- /exp-inner -->
   </section>
 
   <!-- ═══════════════ CONTACT ═══════════════ -->

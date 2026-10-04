@@ -972,3 +972,293 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     setup();
   }
 })();
+
+
+// ── Experience timeline scroll animation ─
+(function initExpTimeline() {
+  const rows = document.querySelectorAll('.exp-tl-row');
+  if (!rows.length) return;
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('exp-visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  rows.forEach(row => obs.observe(row));
+})();
+
+
+// ── Project showcase navigation ──────────
+(function initProjectShowcase() {
+  const track   = document.getElementById('pj-track');
+  const prevBtn = document.getElementById('pj-prev');
+  const nextBtn = document.getElementById('pj-next');
+  const dotsEl  = document.getElementById('pj-dots');
+  if (!track || !prevBtn || !nextBtn) return;
+
+  const slides = track.querySelectorAll('.pj-slide');
+  const total  = slides.length;
+  let current  = 0;
+
+  function goTo(index, dir) {
+    if (index < 0 || index >= total) return;
+    current = index;
+    track.style.transform = `translateX(-${current * 100}%)`;
+
+    // Animate the entering slide's info side
+    const info = slides[current].querySelector('.pj-info-side');
+    if (info) {
+      info.style.animation = 'none';
+      info.offsetHeight; // reflow
+      info.style.animation = dir === 'right'
+        ? 'pjSlideFromRight 0.5s cubic-bezier(0.77,0,0.175,1) both'
+        : 'pjSlideFromLeft  0.5s cubic-bezier(0.77,0,0.175,1) both';
+    }
+
+    // Update dots
+    dotsEl.querySelectorAll('.pj-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+
+    // Update button states
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+
+    if (window.lucide) lucide.createIcons();
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1, 'left'));
+  nextBtn.addEventListener('click', () => goTo(current + 1, 'right'));
+
+  // Dot clicks
+  dotsEl.querySelectorAll('.pj-dot').forEach((dot, i) => {
+    dot.addEventListener('click', () => goTo(i, i > current ? 'right' : 'left'));
+  });
+
+  // Keyboard arrows when section is in view
+  window.addEventListener('keydown', (e) => {
+    const section = document.getElementById('projects');
+    if (!section) return;
+    const rect = section.getBoundingClientRect();
+    if (rect.top > window.innerHeight || rect.bottom < 0) return;
+    if (e.key === 'ArrowRight') goTo(current + 1, 'right');
+    if (e.key === 'ArrowLeft')  goTo(current - 1, 'left');
+  });
+
+  // Touch swipe
+  let touchX = 0;
+  track.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) dx < 0 ? goTo(current + 1, 'right') : goTo(current - 1, 'left');
+  }, { passive: true });
+
+  // Init
+  goTo(0, 'right');
+})();
+
+
+// ── Project accordion — wheel scroll driven ─
+(function initProjectAccordion() {
+  const accordion = document.getElementById('pj-accordion');
+  if (!accordion) return;
+
+  const items  = accordion.querySelectorAll('.pj-item');
+  const total  = items.length;
+  let current  = 0;
+  let locked   = false;
+
+  function activate(index) {
+    if (index === current || index < 0 || index >= total) return;
+    current = index;
+    locked  = true;
+    items.forEach((item, i) => item.classList.toggle('active', i === index));
+    if (window.lucide) lucide.createIcons();
+    setTimeout(() => { locked = false; }, 700);
+  }
+
+  // Click on row
+  items.forEach((item, i) => {
+    item.querySelector('.pj-row').addEventListener('click', () => activate(i));
+  });
+
+  // Wheel inside the accordion block → advance projects
+  accordion.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (locked) return;
+    if (e.deltaY > 0) activate(current + 1);
+    else               activate(current - 1);
+  }, { passive: false });
+
+  // Page scroll: when accordion is in viewport, intercept scroll to step through projects
+  let pageScrollBuffer = 0;
+  const THRESHOLD = 120; // px of scroll needed to step
+
+  window.addEventListener('wheel', (e) => {
+    const rect = accordion.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight * 0.8 && rect.bottom > window.innerHeight * 0.2;
+    if (!inView) return;
+
+    // If first project and scrolling up, or last project and scrolling down — let page scroll
+    if ((current === 0 && e.deltaY < 0) || (current === total - 1 && e.deltaY > 0)) return;
+
+    e.preventDefault();
+    if (locked) return;
+
+    pageScrollBuffer += e.deltaY;
+    if (Math.abs(pageScrollBuffer) >= THRESHOLD) {
+      activate(pageScrollBuffer > 0 ? current + 1 : current - 1);
+      pageScrollBuffer = 0;
+    }
+  }, { passive: false });
+
+  activate(0);
+})();
+
+
+// ── Savesta slider ───────────────────────
+(function initSavestaSlider() {
+  const slides = document.getElementById('savesta-slides');
+  const dotsContainer = document.getElementById('savesta-dots');
+  if (!slides) return;
+
+  const total = slides.children.length;
+  let current = 0;
+
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'agri-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  function goTo(index) {
+    current = (index + total) % total;
+    slides.style.transform = `translateX(-${current * 100}%)`;
+    dotsContainer.querySelectorAll('.agri-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  let timer = setInterval(() => goTo(current + 1), 3500);
+  const sliderEl = slides.closest('.agrinova-slider');
+  sliderEl.addEventListener('mouseenter', () => clearInterval(timer));
+  sliderEl.addEventListener('mouseleave', () => {
+    timer = setInterval(() => goTo(current + 1), 3500);
+  });
+
+  window.savestaSlide = (dir) => {
+    clearInterval(timer);
+    goTo(current + dir);
+    timer = setInterval(() => goTo(current + 1), 3500);
+  };
+})();
+
+
+// ── Certification preview popup ──────────
+(function initCertPreviews() {
+  // Create one shared popup element at body level
+  const popup = document.createElement('div');
+  popup.style.cssText = `
+    position: fixed;
+    z-index: 99999;
+    width: 300px;
+    background: rgba(5,10,20,0.98);
+    border: 1px solid rgba(250,180,0,0.5);
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    display: none;
+  `;
+  const img = document.createElement('img');
+  img.style.cssText = 'width:100%;border-radius:8px;display:block;';
+  const label = document.createElement('div');
+  label.style.cssText = 'font-size:0.58rem;font-family:monospace;color:#fbbf24;letter-spacing:2px;text-align:center;margin-top:6px;text-transform:uppercase;';
+  label.textContent = '✦ CERTIFICATE';
+  popup.appendChild(img);
+  popup.appendChild(label);
+  document.body.appendChild(popup);
+
+  document.querySelectorAll('.skill-cert').forEach(card => {
+    const src = card.dataset.cert;
+    if (!src) return;
+
+    card.addEventListener('mouseenter', () => {
+      img.src = src;
+      popup.style.display = 'block';
+      requestAnimationFrame(() => { popup.style.opacity = '1'; });
+    });
+
+    card.addEventListener('mousemove', (e) => {
+      const pw = 310, ph = 230;
+      let left = e.clientX + 16;
+      let top  = e.clientY - ph / 2;
+      if (left + pw > window.innerWidth  - 10) left = e.clientX - pw - 16;
+      if (top  < 10)                           top  = 10;
+      if (top  + ph > window.innerHeight - 10) top  = window.innerHeight - ph - 10;
+      popup.style.left = left + 'px';
+      popup.style.top  = top  + 'px';
+    });
+
+    card.addEventListener('mouseleave', () => {
+      popup.style.opacity = '0';
+      setTimeout(() => { popup.style.display = 'none'; }, 200);
+    });
+  });
+})();
+
+
+// ── Attestation / certificate lightbox ───
+(function initAttestationLightbox() {
+  // Create lightbox overlay
+  const overlay = document.createElement('div');
+  overlay.style.cssText = `
+    position: fixed; inset: 0; z-index: 999999;
+    background: rgba(0,0,0,0.88);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+    cursor: zoom-out;
+    backdrop-filter: blur(8px);
+  `;
+  const img = document.createElement('img');
+  img.style.cssText = `
+    max-width: 90vw; max-height: 88vh;
+    border-radius: 12px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.8);
+    border: 1px solid rgba(250,180,0,0.3);
+    transform: scale(0.94);
+    transition: transform 0.25s ease;
+  `;
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+
+  function open(src) {
+    img.src = src;
+    overlay.style.pointerEvents = 'auto';
+    overlay.style.opacity = '1';
+    img.style.transform = 'scale(1)';
+  }
+
+  function close() {
+    overlay.style.opacity = '0';
+    overlay.style.pointerEvents = 'none';
+    img.style.transform = 'scale(0.94)';
+  }
+
+  overlay.addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+  // Attach to all attestation buttons
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.pj-attest-btn');
+    if (btn) { e.stopPropagation(); open(btn.dataset.img); }
+  });
+})();
